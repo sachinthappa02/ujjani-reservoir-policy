@@ -34,7 +34,7 @@ See [`data/README.md`](data/README.md) for the full data dictionary and download
 
 ### Figures
 
-- `figures/figure1_ujjani_storage_and_model.png`: Figure 1 used in the submission.
+- ![Figure used in submission](figures/figure1_ujjani_storage_and_model.png)
 
 ---
 
