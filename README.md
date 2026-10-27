@@ -229,9 +229,4 @@ Everything the code needs is one monthly CSV: `data/processed/ujjani_monthly.csv
 
 ## Cleaning log
 
-Add one line per decision here (what was changed, why, which raw file).
-
-- (empty)
-
-
 Lempert, R. J., Popper, S. W., Bankes, S. C. (2003). *Shaping the Next One Hundred Years: New Methods for Quantitative, Long-Term Policy Analysis*. RAND.
