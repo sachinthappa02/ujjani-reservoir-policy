@@ -2,10 +2,8 @@
 
 ## Ujjani (Yashwantrao Chavan Sagar), Bhima River, near Solapur, Maharashtra
 
-**Student:** [Your name] | **Roll:** [Roll number]  
-**Course:** [Course code and name]  
-**Instructor:** [Instructor name]  
-**Submission:** Data and Preliminary Results (Extension), 27 October 2026
+**Student:** Sachin Thappa | **Roll:** 23B0709 
+**Course:** CE 766  
 
 ---
 
@@ -24,26 +22,6 @@ This project investigates how Ujjani's release policy can be optimised to balanc
 3. Insight into how sensitive the best policies are to inflow uncertainty, including the conditions under which the reservoir fails to meet competing demands.
 
 ---
-
-## Repository structure
-
-```
-ujjani-reservoir-policy/
-├── README.md
-├── requirements.txt
-├── .gitignore
-├── code/
-│   ├── ujjani_baseline.py        # monthly mass-balance simulator, baseline policy, metrics
-│   └── make_figure1.py           # draws Figure 1
-├── data/
-│   ├── README.md                 # data dictionary, download steps, cleaning checklist
-│   ├── raw/                      # original downloads (WRIS, NWDP, CWC, IMD), untouched
-│   └── processed/
-│       └── ujjani_monthly_TEMPLATE.csv   # header only; real file goes here
-├── figures/
-│   └── figure1_ujjani_storage_and_model.png
-└── results/                      # baseline_summary.csv, baseline_monthly.csv (after the run)
-```
 
 ### Code
 
@@ -209,5 +187,51 @@ Hadka, D., Reed, P. (2013). Borg: an auto-adaptive many-objective evolutionary c
 Hargreaves, G. H., Samani, Z. A. (1985). Reference crop evapotranspiration from temperature. *Applied Engineering in Agriculture*, 1(2), 96-99.
 
 Hashimoto, T., Stedinger, J. R., Loucks, D. P. (1982). Reliability, resilience, and vulnerability criteria for water resource system performance evaluation. *Water Resources Research*, 18(1), 14-20.
+
+# Data guide
+
+Everything the code needs is one monthly CSV: `data/processed/ujjani_monthly.csv`. Original downloads go in `data/raw/` and are never edited by hand, so every number in the processed file can be traced back.
+
+## Processed file format
+
+| Column | Required | Unit | Meaning |
+|---|---|---|---|
+| `date` | yes | YYYY-MM-01 | first day of the month |
+| `storage_mcm` | yes | MCM | **end-of-month gross storage** (dead + live) |
+| `release_mcm` | yes | MCM | total outflow during that month (canal + river + spill) |
+| `evap_mcm` | no | MCM | evaporation loss during that month (0 with a warning if missing) |
+| `inflow_mcm` | no | MCM | gauged inflow during that month (if absent, inflow is reconstructed) |
+
+`ujjani_monthly_TEMPLATE.csv` in `data/processed/` has the header only. Copy it to `ujjani_monthly.csv` and fill it.
+
+## Where to get each series
+
+| Series | Source | Notes |
+|---|---|---|
+| Storage / level (2000-2022) | [India-WRIS](https://indiawris.gov.in/wris/) reservoir section; or [GROWL](https://www.nature.com/articles/s41597-026-07091-9) if Ujjani is included | open the reservoir storage/level data, select Ujjani (Maharashtra), set the date range and export |
+| Weekly storage cross-check | [CWC bulletin](https://www.cwc.gov.in/reservoir-level-storage-bulletin) | PDFs; useful for gap filling and spot checks |
+| Gate discharge (recent only) | [NWDP Ujjani Dam_1](https://nwdp.nwic.gov.in/dataset/reservoir_discharge_ujjani_dam_1_maharashtra_telemetry_hourly) | hourly, in cusec; the file reviewed begins in October 2023 |
+| Rainfall, temperature | [IMD](https://imdweb.lwcc.in/) | temperature drives Hargreaves evaporation |
+
+## Unit conversions
+
+- 1 TMC = 28.3168 MCM
+- 1 cusec = 0.0283168 m³/s = 0.00244658 MCM/day
+- Level (m) to storage needs the reservoir's elevation-capacity table. Record which table was used.
+
+## Cleaning checklist
+
+1. Convert everything to MCM and to end-of-month values (storage) or monthly totals (release, evaporation).
+2. Check the water balance: months where reconstructed inflow comes out negative usually point to a data or unit problem.
+3. Record gaps and how each was filled (interpolated, taken from the CWC bulletin, dropped).
+4. State which capacity figure the storage series refers to (3,320 MCM or 3,491 MCM gross) and keep it consistent with `S_GROSS` and `S_DEAD` in `code/ujjani_baseline.py`.
+5. Replace the uniform `MONTH_W` demand weights in the script with the real monthly demand schedule.
+
+## Cleaning log
+
+Add one line per decision here (what was changed, why, which raw file).
+
+- (empty)
+
 
 Lempert, R. J., Popper, S. W., Bankes, S. C. (2003). *Shaping the Next One Hundred Years: New Methods for Quantitative, Long-Term Policy Analysis*. RAND.
