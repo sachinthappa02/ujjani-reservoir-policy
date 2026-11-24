@@ -1,0 +1,19 @@
+parameter,value,source
+FRL_m,496.83,CWC 2020
+MDDL_m,491.03,CWC 2020
+MWL_m,497.58,CWC 2020
+gross_storage_design_MCM,3320.01,CWC 2020
+dead_storage_MCM,1802.81,CWC 2020
+live_storage_1977_MCM,1517.2,CWC 2020
+live_storage_2017_18_MCM,1347.07,CWC 2020 SRS survey
+S_max_used_MCM,3149.88,dead + 2017-18 live
+S_emergency_floor_MCM,994.6,dead - 60% of live (2024 drawdown)
+catchment_km2,14856.0,CWC 2020
+mean_annual_runoff_MCM,7585.0,CWC 2020
+runoff_75pc_dependable_MCM,5688.75,CWC 2020
+fitted_lognormal_sigma,0.3405,fitted
+fitted_CV,0.3507,fitted
+k_reg_reference,0.4,behavioural calibration
+demand_total_MCM_yr,1878.0,planned utilisation
+demand_irrigation_MCM_yr,1595.0,assumption
+demand_municipal_MCM_yr,283.0,"assumption, 10 TMC"
