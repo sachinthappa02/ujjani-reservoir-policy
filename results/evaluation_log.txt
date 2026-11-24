@@ -1,0 +1,49 @@
+compromise index 43 | most robust index 30
+                 policy  rel_irr  sq_def   vul   res  rel_mun  worst_year    spill  below_dead    evap  irr_supply_pct
+         SOP (baseline)    0.794   0.147 0.773 0.389      1.0       0.414 1015.073       0.125 463.968          81.744
+     Compromise hedging    0.641   0.095 0.485 0.408      1.0       0.479 1076.188       0.002 479.102          76.630
+Selected robust hedging    0.738   0.132 0.685 0.332      1.0       0.409 1097.347       0.008 477.704          75.312
+year_class  rel_irr  supply_pct  worst_month_short  below_dead                  policy
+       dry    0.741      75.617             99.853       0.177          SOP (baseline)
+    normal    0.806      83.819             98.846       0.113          SOP (baseline)
+       wet    0.835      85.795             95.383       0.085          SOP (baseline)
+       dry    0.585      70.582             68.932       0.005      Compromise hedging
+    normal    0.657      78.902             56.385       0.001      Compromise hedging
+       wet    0.681      80.409             54.489       0.000      Compromise hedging
+       dry    0.707      71.114             88.364       0.021 Selected robust hedging
+    normal    0.745      76.553             84.012       0.002 Selected robust hedging
+       wet    0.761      78.269             81.046       0.001 Selected robust hedging
+Robustness: SOP 0.273 | compromise 0.487 | selected 0.645
+Selected theta (alpha, u_lo, u_hi) by month:
+        Jun   Jul   Aug   Sep   Oct   Nov   Dec   Jan   Feb   Mar   Apr   May
+alpha  0.97  1.00  0.87  0.98  0.38  0.73  0.25  0.07  0.27  0.12  0.01  0.45
+u_lo   0.00  0.10  0.02  0.02  0.11  0.02  0.78  0.09  0.03  0.40  0.12  0.92
+u_hi   0.01  0.21  0.02  0.14  0.10  0.01  0.00  0.00  0.12  0.08  0.70  0.01
+SOP criteria met: mun 1.0 | worst-year 0.635 | below-dead 0.2825
+SEL criteria met: mun 1.0 | worst-year 0.645 | below-dead 0.88
+
+CART failure rules, SOP_success:
+|--- demand_mult <= 0.95
+|   |--- k_reg <= 0.36
+|   |   |--- class: True
+|   |--- k_reg >  0.36
+|   |   |--- class: False
+|--- demand_mult >  0.95
+|   |--- demand_mult <= 1.01
+|   |   |--- class: True
+|   |--- demand_mult >  1.01
+|   |   |--- class: True
+
+
+CART failure rules, SEL_success:
+|--- k_reg <= 0.35
+|   |--- demand_mult <= 1.03
+|   |   |--- class: True
+|   |--- demand_mult >  1.03
+|   |   |--- class: True
+|--- k_reg >  0.35
+|   |--- cv <= 0.46
+|   |   |--- class: False
+|   |--- cv >  0.46
+|   |   |--- class: True
+
