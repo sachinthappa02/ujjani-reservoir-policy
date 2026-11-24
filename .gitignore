@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+# synthetic smoke-test outputs
+results/DEMO_*
+figures/DEMO_*
